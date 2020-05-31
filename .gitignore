@@ -5,3 +5,5 @@ config.json
 .swp
 package-lock.json
 yarn.lock
+yarn-error.log
+build

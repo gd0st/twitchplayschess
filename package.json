@@ -1,0 +1,48 @@
+{
+	"name": "alphachamp",
+	"version": "0.1.0",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"setup": "npx lerna bootstrap",
+		"dev": "npx lerna run dev --parallel --stream",
+		"dev:server": "yarn workspace @alphachamp/backend dev",
+		"dev:client": "yarn workspace @alphachamp/frontend dev",
+		"start": "yarn workspace @alphachamp/backend start",
+		"build": "npx lerna run build --parallel --stream"
+	},
+	"lerna": {
+		"packages": [
+			"packages/*"
+		],
+		"npmClient": "yarn",
+		"useWorkspaces": true,
+		"version": "0.0.0"
+	},
+	"engines": {
+		"node": ">=10.15.3"
+	},
+	"devDependencies": {
+		"husky": "^4.2.5",
+		"lint-staged": "^10.2.2",
+		"prettier": "^2.0.5"
+	},
+	"prettier": {
+		"useTabs": true,
+		"tabWidth": 4,
+		"singleQuote": true,
+		"jsxSingleQuote": true
+	},
+	"lint-staged": {
+		"*.+(json|scss|css|md)": [
+			"prettier --write"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	}
+}
