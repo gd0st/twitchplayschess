@@ -4,21 +4,23 @@
 	"license": "MIT",
 	"devDependencies": {},
 	"scripts": {
-		"dev": "webpack-dev-server --config config/webpack.config.js",
+		"dev": "webpack-dev-server --config config/webpack.config.js --port=3000",
 		"build": "webpack --config config/webpack.config.js"
 	},
 	"babel": {
 		"presets": [
-			"@babel/env",
-			"@babel/typescript"
+			"@babel/preset-env",
+			"@babel/preset-typescript"
 		],
 		"plugins": [
-			"transform-class-properties"
+			"transform-class-properties",
+			"@babel/plugin-transform-runtime"
 		]
 	},
 	"eslintConfig": {
 		"parserOptions": {
-			"ecmaVersion": 2017
+			"ecmaVersion": 2017,
+			"sourceType": "module"
 		},
 		"env": {
 			"es6": true
@@ -29,7 +31,7 @@
 		"overrides": [
 			{
 				"files": [
-					"src/*"
+					"src/**/*.ts"
 				],
 				"parser": "@typescript-eslint/parser",
 				"extends": [
@@ -58,6 +60,7 @@
 	},
 	"dependencies": {
 		"@babel/core": "^7.10.2",
+		"@babel/plugin-transform-runtime": "^7.10.1",
 		"@babel/preset-env": "^7.10.2",
 		"@babel/preset-typescript": "^7.10.1",
 		"@types/node": "^14.0.6",
