@@ -1,6 +1,6 @@
 import tmi from 'tmi.js'
 import 'dotenv/config'
-import {TmiOptions} from '../modules/tmi/TmiConfig'
+import {TmiOptions} from '../definitions/tmi/TmiConfig'
 
 // Creates instance of twitch client and returns for it to be used
 
