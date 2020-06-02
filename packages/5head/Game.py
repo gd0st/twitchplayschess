@@ -20,6 +20,10 @@ class BoardGame:
             move = self.board.push_san(move)
             # Update position cache
             self.position.append(move)
+
             return move
         except:
             return 'Illegal Move'
+    
+    def get_fen(self):
+        return self.board.fen()

@@ -36,5 +36,9 @@ def register_move(message):
 def send_move(move):
     socketio.emit('update', move)
 
+@socketio.on("reload")
+def send_position(message):
+    return board.get_fen()
+
 if __name__ == "__main__":
     socketio.run(app=app, host='127.0.0.1', port=5000)
