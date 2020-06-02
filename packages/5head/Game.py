@@ -23,4 +23,3 @@ class BoardGame:
             return move
         except:
             return 'Illegal Move'
-

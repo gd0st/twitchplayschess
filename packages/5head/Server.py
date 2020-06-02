@@ -31,8 +31,10 @@ def register_move(message):
         print("\n\n")
         print(engine.get_best_move())
 
-        return str(future.result())
+        send_move(str(future.result()))
 
+def send_move(move):
+    socketio.emit('update', move)
 
 if __name__ == "__main__":
     socketio.run(app=app, host='127.0.0.1', port=5000)

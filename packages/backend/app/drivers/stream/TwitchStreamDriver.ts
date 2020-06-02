@@ -3,7 +3,13 @@ import {TwitchClient} from '../../clients/TwitchClient'
 
 export const TwitchStreamDriver : StreamDriver = {
     
-    readChat: () => {
+    readChat: (sio: any) => {
+
+        var socket = sio('ws://localhost:5000') 
+
+        socket.on('connect', () => {
+            console.log("Connected!")
+        })
 
         TwitchClient.connect();
 
@@ -19,6 +25,8 @@ export const TwitchStreamDriver : StreamDriver = {
             console.log('message:', message)
             console.log('\n\n')
             console.log('self:', self)
+
+            socket.emit('new move', message)
         });
     
         return ["temp", "temp2"]

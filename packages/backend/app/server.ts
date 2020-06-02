@@ -2,17 +2,13 @@ import {TwitchStreamDriver} from '../app/drivers/stream/TwitchStreamDriver';
 import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser';
+import io from 'socket.io-client'
 
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-TwitchStreamDriver.readChat();
-
-app.set('port', process.env.PORT || 8080);
 
 app.listen(app.get('port'), (err: any) => {
 	if (err) {
@@ -21,3 +17,10 @@ app.listen(app.get('port'), (err: any) => {
 		console.log(`Server is running on port ${app.get('port')}`);
 	}
 });
+
+app.set('port', process.env.PORT || 8080);
+
+TwitchStreamDriver.readChat(io);
+
+
+
