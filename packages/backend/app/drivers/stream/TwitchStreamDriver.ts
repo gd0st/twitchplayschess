@@ -18,6 +18,24 @@ export const TwitchStreamDriver : StreamDriver = {
         })
 
         TwitchClient.on('message', (channel, tags, message, self) => {
+            console.log(TwitchStreamDriver.gameSession)
+            if (!TwitchStreamDriver.gameSession.includes(tags.username)) {
+                
+                if (message === '!join'){
+                    
+                    TwitchStreamDriver.gameSession.push(tags.username)
+                    return 
+                }else {
+                    return
+                }
+            }
+
+            if(message==='!leave'){
+                TwitchStreamDriver.gameSession = TwitchStreamDriver.gameSession.filter(element => element !== tags.username)
+                return
+            }
+            
+            
             console.log('channel:', channel)
             console.log('\n\n')
             console.log('tags:', tags)
@@ -28,9 +46,9 @@ export const TwitchStreamDriver : StreamDriver = {
 
             socket.emit('new move', message)
         });
-    
-        return ["temp", "temp2"]
     },
+
+    gameSession: [],
 
     banUser: (user: string) => {
         console.log("temp")

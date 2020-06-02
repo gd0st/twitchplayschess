@@ -5,7 +5,8 @@
  * banUser: Bans given user
  */
 export interface StreamDriver {
-    readChat: (sio: any) => string[],
+    readChat: (sio: any) => void,
+    gameSession: string[],
     banUser: (user: string) => void
 }
 
