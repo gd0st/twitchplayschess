@@ -1,25 +1,25 @@
 import {
-	BasicShadowMap,
-	CameraHelper,
+	AmbientLight,
 	Color,
 	DirectionalLight,
-	DirectionalLightHelper,
 	HemisphereLight,
-	HemisphereLightHelper,
 	OrthographicCamera,
 	PCFSoftShadowMap,
 	Scene,
 	Vector2,
-	Vector3,
 	WebGLRenderer,
+	WebGLRendererParameters,
 } from 'three';
-import { ChessBoard, DebugOverlay } from './assets/objects';
+import { ChessBoard, DebugOverlay } from '../assets/nodes';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Stats from 'stats.js';
 
-export default class Renderer {
-	private _renderer: WebGLRenderer;
+export interface AppRendererParameters extends WebGLRendererParameters {
+	targetResolution?: Vector2;
+}
+
+export default class AppRenderer extends WebGLRenderer {
 	private _camera: OrthographicCamera;
 	private _scene: Scene;
 	private _resize_handler: () => void;
@@ -27,28 +27,29 @@ export default class Renderer {
 	private _stats: Stats;
 	private _frame_request_id: number;
 
-	private static readonly size = new Vector2(1920, 1080);
+	private _target_resolution = new Vector2(1920, 1080);
 	private _controls: OrbitControls;
 
-	constructor(root: HTMLElement) {
-		this._renderer = new WebGLRenderer({
-			antialias: true,
-		});
-		this._renderer.setSize(window.innerWidth, window.innerHeight);
-		this._renderer.shadowMap.enabled = true;
-		this._renderer.shadowMap.type = PCFSoftShadowMap;
+	constructor(parameters?: AppRendererParameters) {
+		super(parameters);
 
-		root.appendChild(this._renderer.domElement);
+		if (parameters.targetResolution) {
+			this._target_resolution = parameters.targetResolution;
+		}
+
+		this.setSize(window.innerWidth, window.innerHeight);
+		this.shadowMap.enabled = true;
+		this.shadowMap.type = PCFSoftShadowMap;
 
 		// init stats overlay
 		this._stats = new Stats();
-		root.appendChild(this._stats.dom);
+		this.domElement.appendChild(this._stats.dom);
 
 		this.createScene();
 		this.createCamera();
 
 		// start render loop
-		this.animate(null);
+		this._animate(null);
 
 		this._resize_handler = (): void => {
 			this.onResize();
@@ -62,7 +63,7 @@ export default class Renderer {
 
 		this.createLights();
 
-		this._scene.add(new DebugOverlay(Renderer.size));
+		this._scene.add(new DebugOverlay(this._target_resolution));
 
 		const board = new ChessBoard();
 		board.position.set(0, 0, -1);
@@ -71,6 +72,10 @@ export default class Renderer {
 	}
 
 	private createLights(): void {
+		const ambientLight = new AmbientLight(0xffffff, 0.9);
+		ambientLight.color.setHSL(0.6, 1, 0.6);
+		this._scene.add(ambientLight);
+
 		const hemiLight = new HemisphereLight(0xffffff, 0xffffff, 0.6);
 		hemiLight.color.setHSL(0.6, 1, 0.6);
 		hemiLight.groundColor.setHSL(0.095, 1, 0.75);
@@ -85,15 +90,15 @@ export default class Renderer {
 
 		dirLight.castShadow = true;
 
-		dirLight.shadow.mapSize.width = Renderer.size.x;
-		dirLight.shadow.mapSize.height = Renderer.size.y;
+		const { x: width, y: height } = this._target_resolution;
 
-		const d = 500;
+		dirLight.shadow.mapSize.width = width;
+		dirLight.shadow.mapSize.height = height;
 
-		dirLight.shadow.camera.left = -d;
-		dirLight.shadow.camera.right = d;
-		dirLight.shadow.camera.top = d;
-		dirLight.shadow.camera.bottom = -d;
+		dirLight.shadow.camera.left = width * -0.5;
+		dirLight.shadow.camera.right = width * 0.5;
+		dirLight.shadow.camera.top = height * 0.5;
+		dirLight.shadow.camera.bottom = height * -0.5;
 
 		dirLight.shadow.camera.near = -1000;
 		dirLight.shadow.camera.far = 1000;
@@ -117,10 +122,7 @@ export default class Renderer {
 		);
 		this._camera.position.set(0, 0, 1);
 
-		this._controls = new OrbitControls(
-			this._camera,
-			this._renderer.domElement
-		);
+		this._controls = new OrbitControls(this._camera, this.domElement);
 
 		this._controls.enableDamping = false;
 		this._controls.dampingFactor = 0.05;
@@ -133,9 +135,9 @@ export default class Renderer {
 		this._controls.maxPolarAngle = Math.PI / 2;
 	}
 
-	private animate(time: number) {
+	private _animate(time: number) {
 		this._frame_request_id = requestAnimationFrame((_time: number) =>
-			this.animate(_time)
+			this._animate(_time)
 		);
 		time;
 
@@ -143,7 +145,7 @@ export default class Renderer {
 
 		this._controls.update();
 
-		this._renderer.render(this._scene, this._camera);
+		this.render(this._scene, this._camera);
 
 		this._stats.end();
 	}
@@ -154,17 +156,15 @@ export default class Renderer {
 		top: number;
 		bottom: number;
 	} {
-		const size = Renderer.size;
-		const aspect = size.x / size.y;
+		const { x, y } = this._target_resolution;
+		const aspect = x / y;
 
 		const view_aspect = window.innerWidth / window.innerHeight;
 
 		const width =
-			(view_aspect > aspect ? (size.x * view_aspect) / aspect : size.x) *
-			0.5;
+			(view_aspect > aspect ? (x * view_aspect) / aspect : x) * 0.5;
 		const height =
-			(view_aspect > aspect ? size.y : (size.y * aspect) / view_aspect) *
-			0.5;
+			(view_aspect > aspect ? y : (y * aspect) / view_aspect) * 0.5;
 
 		return {
 			left: -width,
@@ -176,7 +176,7 @@ export default class Renderer {
 
 	private onResize(): void {
 		// update the renderer resolution
-		this._renderer.setSize(window.innerWidth, window.innerHeight);
+		this.setSize(window.innerWidth, window.innerHeight);
 
 		// update the camera
 		Object.assign(this._camera, this.calculateCameraFrustum());
@@ -194,9 +194,9 @@ export default class Renderer {
 		window.removeEventListener('resize', this._resize_handler, true);
 
 		// dispose main renderer
-		this._renderer.dispose();
+		super.dispose();
 
 		// remove canvas dom element
-		this._renderer.domElement.remove();
+		this.domElement.remove();
 	}
 }

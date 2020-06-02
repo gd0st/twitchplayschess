@@ -1,14 +1,8 @@
-import {
-	AxesHelper,
-	Box3,
-	Box3Helper,
-	Color,
-	Group,
-	Vector2,
-	Vector3,
-} from 'three';
+import { AxesHelper, Box3, Box3Helper, Color, Vector2, Vector3 } from 'three';
 
-export default class DebugOverlay extends Group {
+import { Node } from '../../core';
+
+export default class DebugOverlay extends Node {
 	constructor(size: Vector2) {
 		super();
 

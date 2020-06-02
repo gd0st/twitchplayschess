@@ -2,17 +2,16 @@ import {
 	Color,
 	DoubleSide,
 	Group,
-	Material,
 	Mesh,
-	MeshBasicMaterial,
 	MeshToonMaterial,
 	MeshToonMaterialParameters,
-	Object3D,
 	ShapeBufferGeometry,
 	ShapePath,
 	Vector3,
 } from 'three';
 import { SVGLoader, SVGResult } from 'three/examples/jsm/loaders/SVGLoader';
+
+import { Node } from '../../core';
 
 // "require()"ing these file just gives us the absolute path to them in the
 // build output.  So we still have to load them with the svg loader at runtime.
@@ -63,7 +62,7 @@ const sub_mat_props: MeshToonMaterialParameters[] = [
 	},
 ];
 
-export default class ChessPiece extends Object3D {
+export default class ChessPiece extends Node {
 	private static _loader = new SVGLoader();
 	private static _loadedFiles = new Map<string, Promise<SVGResult>>();
 	private static _loadedIcons = new Map<string, Promise<Group>>();

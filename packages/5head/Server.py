@@ -33,12 +33,15 @@ def register_move(message):
 
         send_move(str(future.result()))
 
+
 def send_move(move):
     socketio.emit('update', move)
 
-@socketio.on("reload")
+
+@socketio.on("get game state")
 def send_position(message):
-    return board.get_fen()
+    return board.get_fen(), 0
+
 
 if __name__ == "__main__":
     socketio.run(app=app, host='127.0.0.1', port=5000)

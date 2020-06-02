@@ -1,16 +1,16 @@
-import { ChessPiece, ChessPieceType, ChessPieceVariant } from './';
+import { ChessPieceType, ChessPieceVariant } from './ChessPiece';
 import {
-	Color,
 	Group,
 	Material,
 	Mesh,
-	MeshLambertMaterial,
-	MeshStandardMaterial,
 	MeshToonMaterial,
 	PlaneBufferGeometry,
 } from 'three';
 
-export default class ChessBoard extends Group {
+import { ChessPiece } from '.';
+import { Node } from '../../core';
+
+export default class ChessBoard extends Node {
 	constructor() {
 		super();
 
