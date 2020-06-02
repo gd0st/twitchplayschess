@@ -65,7 +65,18 @@ module.exports = {
 					// css loader
 					{
 						test: /\.css$/i,
-						use: ['style-loader', 'css-loader'],
+						use: [
+							require.resolve('style-loader'),
+							require.resolve('css-loader'),
+						],
+					},
+					// raw file loader
+					// This imports the contents of the file as a string.
+					// If you add new extensions here, make sure to also add
+					// them to file loader exclude list below.
+					{
+						test: /\.(frag|vert)$/,
+						loader: require.resolve('raw-loader'),
 					},
 					// "file" loader makes sure those assets get served by WebpackDevServer.
 					// When you `import` an asset, you get its (virtual) filename.
@@ -80,6 +91,7 @@ module.exports = {
 						// by webpack's internal loaders.
 						exclude: [
 							/\.(js|mjs|jsx|ts|tsx)$/,
+							/\.(frag|vert)$/,
 							/\.html$/,
 							/\.json$/,
 							/\.ejs$/,
