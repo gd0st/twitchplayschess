@@ -10,7 +10,7 @@ socketio = SocketIO(app=app, cors_allowed_origins='*')
 
 board = BoardGame()
 
-engine = Stockfish(path='stockfish-11-linux/Linux/stockfish_20011801_x64_modern', parameters={
+engine = Stockfish(parameters={
     'Skill Level': 15
 })
 
