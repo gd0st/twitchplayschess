@@ -134,4 +134,5 @@ module.exports = {
 		}),
 	],
 	performance: false,
+	stats: 'minimal',
 };

@@ -7,9 +7,10 @@
 	],
 	"scripts": {
 		"setup": "npx lerna bootstrap",
-		"dev": "npx lerna run dev --parallel --stream",
-		"dev:server": "yarn workspace @alphachamp/backend dev",
-		"dev:client": "yarn workspace @alphachamp/frontend dev",
+		"dev": "node ./scripts/parallel.js dev",
+		"dev:5head": "yarn workspace @alphachamp/5head dev",
+		"dev:backend": "yarn workspace @alphachamp/backend dev",
+		"dev:frontend": "yarn workspace @alphachamp/frontend dev",
 		"start": "yarn workspace @alphachamp/backend start",
 		"build": "npx lerna run build --parallel --stream"
 	},
@@ -25,6 +26,8 @@
 		"node": ">=10.15.3"
 	},
 	"devDependencies": {
+		"chalk": "^4.0.0",
+		"cross-spawn": "^7.0.3",
 		"husky": "^4.2.5",
 		"lint-staged": "^10.2.2",
 		"prettier": "^2.0.5"

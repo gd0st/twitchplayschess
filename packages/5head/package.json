@@ -1,0 +1,8 @@
+{
+	"name": "@alphachamp/5head",
+	"version": "1.0.0",
+	"scripts": {
+		"dev": "python Server.py",
+		"install": "pip install -r requirements.txt"
+	}
+}
