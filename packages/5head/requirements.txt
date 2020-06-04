@@ -4,3 +4,4 @@ python-dotenv
 python-chess==0.31.1
 flask==1.1.2
 flask-socketio==4.3.0
+eventlet
