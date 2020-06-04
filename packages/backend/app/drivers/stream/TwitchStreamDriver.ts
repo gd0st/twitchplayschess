@@ -11,7 +11,9 @@ export const TwitchStreamDriver : StreamDriver = {
             console.log("Connected!")
         })
 
-        TwitchClient.connect();
+		TwitchClient.connect().catch((error: any) => {
+			console.error(`Failed to connect to Twitch: ${error}`);
+		});
 
         TwitchClient.on("connected", (address: any, port: any) => {
             "Successfully Connected to Twitch"
