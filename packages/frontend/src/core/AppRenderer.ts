@@ -30,7 +30,7 @@ export default class AppRenderer extends WebGLRenderer {
 
 	private _target_resolution = new Vector2(1920, 1080);
 	private _controls: OrbitControls;
-	board: ChessBoard;
+	private _board: ChessBoard;
 
 	constructor(root: HTMLElement, parameters?: AppRendererParameters) {
 		super(parameters);
@@ -70,10 +70,10 @@ export default class AppRenderer extends WebGLRenderer {
 
 		this._scene.add(new DebugOverlay(this._target_resolution));
 
-		this.board = new ChessBoard();
-		this.board.position.set(0, 0, -1);
-		this.board.scale.multiplyScalar(100);
-		this._scene.add(this.board);
+		this._board = new ChessBoard();
+		this._board.position.set(0, 0, -1);
+		this._board.scale.multiplyScalar(100);
+		this._scene.add(this._board);
 	}
 
 	private createLights(): void {

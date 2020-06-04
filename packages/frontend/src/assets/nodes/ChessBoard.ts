@@ -7,9 +7,10 @@ import {
 	PlaneBufferGeometry,
 } from 'three';
 
+import App from '../../App';
 import { ChessPiece } from '.';
-import { GameStateUpdate } from 'src/App';
 import { Node } from '../../core';
+import { autorun } from 'mobx';
 
 export type ChessPieceEntry = [ChessPieceType, ChessPieceVariant] | 'empty';
 
@@ -68,18 +69,21 @@ export default class ChessBoard extends Node {
 		this._pieces_layer = new Group();
 		this._pieces_layer.position.set(-4, 4, 0.1);
 		this.add(this._pieces_layer);
-	}
 
-	update(state: GameStateUpdate): void {
-		if (!this._loaded_initial_state) {
-			this.setFromFEN(state.board);
-		}
+		// autorun for when the game state changes
+		autorun(() => {
+			const { board, move } = App.context.game;
 
-		if (state.move) {
-			console.log(state.move);
-		}
+			if (!board) {
+				return;
+			}
 
-		// todo: check the board state against the fen every time
+			if (!this._loaded_initial_state) {
+				this.setFromFEN(board);
+			}
+
+			console.log(move);
+		});
 	}
 
 	private setFromFEN(fen_string: string): void {
