@@ -20,6 +20,7 @@ export interface AppRendererParameters extends WebGLRendererParameters {
 }
 
 export default class AppRenderer extends WebGLRenderer {
+	private _root: HTMLElement;
 	private _camera: OrthographicCamera;
 	private _scene: Scene;
 	private _resize_handler: () => void;
@@ -29,9 +30,13 @@ export default class AppRenderer extends WebGLRenderer {
 
 	private _target_resolution = new Vector2(1920, 1080);
 	private _controls: OrbitControls;
+	board: ChessBoard;
 
-	constructor(parameters?: AppRendererParameters) {
+	constructor(root: HTMLElement, parameters?: AppRendererParameters) {
 		super(parameters);
+
+		this._root = root;
+		this._root.appendChild(this.domElement);
 
 		if (parameters.targetResolution) {
 			this._target_resolution = parameters.targetResolution;
@@ -43,7 +48,7 @@ export default class AppRenderer extends WebGLRenderer {
 
 		// init stats overlay
 		this._stats = new Stats();
-		this.domElement.appendChild(this._stats.dom);
+		this._root.appendChild(this._stats.dom);
 
 		this.createScene();
 		this.createCamera();
@@ -65,10 +70,10 @@ export default class AppRenderer extends WebGLRenderer {
 
 		this._scene.add(new DebugOverlay(this._target_resolution));
 
-		const board = new ChessBoard();
-		board.position.set(0, 0, -1);
-		board.scale.multiplyScalar(100);
-		this._scene.add(board);
+		this.board = new ChessBoard();
+		this.board.position.set(0, 0, -1);
+		this.board.scale.multiplyScalar(100);
+		this._scene.add(this.board);
 	}
 
 	private createLights(): void {

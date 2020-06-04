@@ -31,16 +31,18 @@ def register_move(message):
         print("\n\n")
         print(engine.get_best_move())
 
-        send_move(str(future.result()))
+        send_state_update(
+            {'board': board.get_fen(), 'move': str(future.result())})
 
 
-def send_move(move):
-    socketio.emit('update', move)
+@socketio.on('connect')
+def on_connect():
+    print('client connected')
+    send_state_update({'board': board.get_fen()})
 
 
-@socketio.on("get game state")
-def send_position(message):
-    return board.get_fen(), 0
+def send_state_update(state):
+    socketio.emit('update', {'state': state})
 
 
 if __name__ == "__main__":
