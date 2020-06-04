@@ -56,10 +56,10 @@ export const TwitchStreamDriver : StreamDriver = {
                 TwitchStreamDriver.gameSession = TwitchStreamDriver.gameSession.filter(element => element !== tags.username)
                 return
             }
-
-            if (re.test(message)){
-                socket.emit('new move', message)   
-            }
+            if(message.length < 8)
+                if (re.test(message)){
+                    socket.emit('new move', message)   
+                }
            
         });
     },
