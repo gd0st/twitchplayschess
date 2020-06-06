@@ -1,0 +1,107 @@
+{
+	"allowHttpBackend": false,
+	"backendCommand": "",
+	"backendFolderName": "",
+	"certificateExceptions": [
+		{
+			"isAllowed": true,
+			"isEphemeral": false,
+			"isOrigin": true,
+			"value": "https://localhost:8080"
+		},
+		{
+			"isAllowed": true,
+			"isEphemeral": false,
+			"isOrigin": true,
+			"value": "https://localhost.rig.twitch.tv:8080"
+		},
+		{
+			"isAllowed": true,
+			"isEphemeral": false,
+			"isOrigin": true,
+			"value": "wss://localhost.rig.twitch.tv:8080"
+		},
+		{
+			"isAllowed": true,
+			"isEphemeral": false,
+			"isOrigin": true,
+			"value": "https://video-edge-7e9574.mia02.abs.hls.ttvnw.net"
+		}
+	],
+	"extensionViews": [
+		{
+			"id": "1",
+			"label": "",
+			"channelId": "54353915",
+			"configurationAnchor": "video_overlay",
+			"displayChannelName": "alphachamp",
+			"type": "video_overlay",
+			"features": {
+				"isBitsEnabled": false,
+				"isChatEnabled": false,
+				"isSubscriptionStatusAvailable": false
+			},
+			"linked": false,
+			"linkedUserId": "",
+			"mode": "viewer",
+			"isPopout": false,
+			"role": "Broadcaster",
+			"orientation": "Portrait",
+			"frameSize": {
+				"width": 1024,
+				"height": 576
+			}
+		}
+	],
+	"frontendCommand": "yarn dev:rig",
+	"frontendFolderName": "public",
+	"manifest": {
+		"anchor": "video_overlay",
+		"assetUrls": [],
+		"authorName": "",
+		"bitsEnabled": false,
+		"canInstall": true,
+		"configUrl": "https://localhost:8080/config.html",
+		"configurationLocation": "none",
+		"description": "",
+		"eulaTosUrl": "",
+		"hasChatSupport": false,
+		"iconUrl": "",
+		"iconUrls": {},
+		"id": "oejtsraeokid15zliovn7lg4vyt4x2",
+		"installationCount": -42,
+		"liveConfigUrl": "",
+		"name": "AlphaChamp",
+		"panelHeight": 0,
+		"privacyPolicyUrl": "",
+		"requestIdentityLink": false,
+		"requiredBroadcasterAbilities": [],
+		"screenshotUrls": [],
+		"sku": "",
+		"state": "Testing",
+		"subscriptionsSupportLevel": "none",
+		"summary": "",
+		"supportEmail": "",
+		"vendorCode": "",
+		"version": "0.0.1",
+		"viewerSummary": "",
+		"viewerUrl": "",
+		"viewerUrls": {
+			"videoOverlay": "https://localhost:8080/video_overlay.html"
+		},
+		"views": {
+			"videoOverlay": {
+				"viewerUrl": "https://localhost:8080/video_overlay.html",
+				"canLinkExternalContent": false
+			},
+			"config": {
+				"viewerUrl": "https://localhost:8080/config.html",
+				"canLinkExternalContent": false
+			}
+		},
+		"whitelistedConfigUrls": [],
+		"whitelistedPanelUrls": []
+	},
+	"name": "AlphaChamp",
+	"version": 1
+}

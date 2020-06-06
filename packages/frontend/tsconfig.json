@@ -1,15 +1,22 @@
 {
 	"compilerOptions": {
-		"outDir": "./build/",
-		"sourceMap": true,
-		"noImplicitAny": true,
-		"module": "CommonJS",
-		"target": "ES6",
+		"target": "es2015",
+		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
-		"moduleResolution": "node",
-		"baseUrl": ".",
+		"skipLibCheck": true,
 		"esModuleInterop": true,
-		"experimentalDecorators": true
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"experimentalDecorators": true,
+		"noEmit": true,
+		"jsx": "react",
+		"baseUrl": "."
 	},
-	"include": ["./src/**/*.ts"]
+	"include": ["./src/**/*"],
+	"exclude": ["node_modules", "build"]
 }

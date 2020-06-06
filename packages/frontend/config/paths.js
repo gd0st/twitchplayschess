@@ -12,6 +12,8 @@ const paths = {
 	package_json: resolve('package.json'),
 	tsconfig: resolve('tsconfig.json'),
 	build: resolve('build'),
+	public: resolve('public'),
+	template: resolve('public/template.html'),
 };
 
 module.exports = paths;
