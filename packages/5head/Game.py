@@ -1,3 +1,4 @@
+from stockfish import Stockfish
 import chess
 
 
@@ -14,12 +15,16 @@ class BoardGame:
     def __init__(self):
         self.board = chess.Board()
         self.position = []
+        self.engine = Stockfish(parameters={
+            'Skill Level': 15
+        })
 
     def make_move(self, move):
+        print(move)
         try:
             move = self.board.push_san(move)
             # Update position cache
-            self.position.append(move)
+            self.position.append(move)           
 
             return move
         except:
@@ -27,3 +32,13 @@ class BoardGame:
     
     def get_fen(self):
         return self.board.fen()
+
+    def is_best_move(self, engine_move, player_move):
+        return engine_move
+
+    def get_best_move(self):
+        return self.engine.get_best_move()
+        
+    def update_position(self, move):
+        self.position.append(move)
+        self.engine.set_position(self.position)
