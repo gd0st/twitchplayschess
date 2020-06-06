@@ -14,6 +14,14 @@ Runs on python >=3.7
 
 Install dependencies by running `pip install -r requirements.txt`
 
+## Access the DB
+
+Install PostgreSQL `sudo apt install postgresql postgresql-contrib`
+
+Log into PostgreSQL `sudo -i -u postgres`
+
+Connect to DB via CLI `psql --host=<host> --dbname=<db> --username=<user> --password`
+
 ## Run the application
 
 Run the command `<python3.7 alias> Server.py`

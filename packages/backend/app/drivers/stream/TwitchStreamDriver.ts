@@ -42,7 +42,7 @@ export const TwitchStreamDriver : StreamDriver = {
         TwitchClient.on('message', (channel, tags, message, self) => {
             console.log(TwitchStreamDriver.gameSession)
             if (!TwitchStreamDriver.gameSession.includes(tags.username)) {
-                
+                console.log(tags)
                 if (message === '!join'){
                     
                     TwitchStreamDriver.gameSession.push(tags.username)
@@ -58,7 +58,12 @@ export const TwitchStreamDriver : StreamDriver = {
             }
             if(message.length < 8)
                 if (re.test(message)){
-                    socket.emit('new move', message)   
+                    socket.emit('new move', 
+                        {
+                            id: tags['user-id'],
+                            move: message,
+                        }
+                    )   
                 }
            
         });
