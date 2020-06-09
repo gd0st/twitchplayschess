@@ -36,15 +36,16 @@ class BoardGame:
     def get_fen(self):
         return self.board.fen()
 
-    def is_best_move(self, engine_moves, player_move):
-        for move in engine_moves:
-            if player_move in move: return True
-        return False
-
     def update_position(self):
         self.engine.set_position(self.position)
 
     def evaluate_moves(self, move):
+        """
+        Determines if a move is good or not by having
+        Stockfish evaluate all possible moves in position
+        Comparing the other moves against the best move
+        If the move a player made is > best move eval - 0.3, it is a "good" move
+        """
         move_table = self.create_move_table()
         best_move = max(move_table, key=move_table.get)
         print(move_table)
@@ -53,6 +54,9 @@ class BoardGame:
         return True if float(best_move_eval)-0.3 < move_table[str(move)] else False
 
     def create_move_table(self):
+        """
+        Takes all possible moves and gets evaluations for them
+        """
         legal_moves = self.board.legal_moves
         moves = {}
         for el in legal_moves:
