@@ -2,12 +2,20 @@
 /// <reference types="node" />
 /// <reference types="react" />
 /// <reference types="react-dom" />
+/// <reference types="./twitch.d.ts" />
 
 declare namespace NodeJS {
 	interface ProcessEnv {
 		readonly NODE_ENV: 'development' | 'production' | 'test';
 		readonly PUBLIC_URL: string;
 	}
+}
+
+interface Window {
+	/**
+	 * Twitch Extension Helper Instance.
+	 */
+	Twitch?: Twitch.Instance;
 }
 
 declare module '*.bmp' {
