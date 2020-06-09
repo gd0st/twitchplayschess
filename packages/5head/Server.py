@@ -2,6 +2,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from Game import BoardGame
 from db.db import SqlDB
+from db.Player import Player
 import concurrent.futures
 
 app = Flask(__name__)
@@ -21,19 +22,29 @@ def register_move(message):
     :return: move sequence to rerender chess positions on frontend
     """
     with concurrent.futures.ThreadPoolExecutor() as executor:
+        uci_move = board.board.parse_san(message['move'])
+
+        message['is_best_move'] = board.evaluate_moves(uci_move)
+        print(message)
+
         future = executor.submit(board.make_move, message['move'])
+        board.update_position()
         print(board.engine.get_board_visual())
+        
         print("\n\n")
-        
-        message['is_best_move'] = board.is_best_move(board.get_best_move(), message['move'])
-        
-        if db.queryPlayer(message['id']):
-            print("Player Found")
-        else:
-            db.add_user(message)
         
         send_state_update(
             {'board': board.get_fen(), 'move': str(future.result())})
+        
+        if db.queryPlayer(message['id']):
+            print("Player Found")
+            player_stats = Player(db.client, message['id'])
+            player_stats.update_accuracy(message['is_best_move'])
+            print(message)
+            # Removes instance of player 
+            del player_stats
+        else:
+            db.add_user(message)
 
 
 @socketio.on('connect')

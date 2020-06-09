@@ -42,7 +42,6 @@ export const TwitchStreamDriver : StreamDriver = {
         TwitchClient.on('message', (channel, tags, message, self) => {
             console.log(TwitchStreamDriver.gameSession)
             if (!TwitchStreamDriver.gameSession.includes(tags.username)) {
-                console.log(tags)
                 if (message === '!join'){
                     
                     TwitchStreamDriver.gameSession.push(tags.username)
