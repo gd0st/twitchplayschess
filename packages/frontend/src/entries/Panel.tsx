@@ -1,4 +1,10 @@
+import App from '../App';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
-ReactDOM.render(<div>panel</div>, document.getElementById('root'));
+render(
+	<App>
+		<div>panel</div>
+	</App>,
+	document.getElementById('root')
+);

@@ -1,4 +1,10 @@
+import App from '../App';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
-ReactDOM.render(<div>mobile</div>, document.getElementById('root'));
+render(
+	<App>
+		<div>mobile</div>
+	</App>,
+	document.getElementById('root')
+);

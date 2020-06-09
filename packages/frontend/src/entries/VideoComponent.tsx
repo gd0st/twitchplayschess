@@ -1,4 +1,10 @@
+import App from '../App';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
-ReactDOM.render(<div>video component</div>, document.getElementById('root'));
+render(
+	<App>
+		<div>video component</div>
+	</App>,
+	document.getElementById('root')
+);

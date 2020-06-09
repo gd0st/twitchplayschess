@@ -1,4 +1,10 @@
+import App from '../App';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
-ReactDOM.render(<div>live config</div>, document.getElementById('root'));
+render(
+	<App>
+		<div>live config</div>
+	</App>,
+	document.getElementById('root')
+);

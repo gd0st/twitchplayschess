@@ -1,3 +1,4 @@
+import Button from '../components/Button';
 import React from 'react';
 import { css } from '@emotion/core';
 
@@ -16,11 +17,11 @@ export default function VideoOverlayView() {
 					right: '7rem',
 					bottom: '5rem',
 					left: 0,
-					background: 'rgba(0,0,0,0.5)',
+					background: 'rgba(0,0,255,0.9)',
 					color: 'white',
 				}}
 			>
-				Haha very epic
+				<Button>Join</Button>
 			</div>
 		</div>
 	);
