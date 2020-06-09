@@ -1,26 +1,11 @@
 import Button from '../components/Button';
 import React from 'react';
-import { css } from '@emotion/core';
+import styles from './VideoOverlayView.module.scss';
 
 export default function VideoOverlayView() {
 	return (
-		<div
-			css={{
-				position: 'relative',
-				height: '100%',
-			}}
-		>
-			<div
-				css={{
-					position: 'absolute',
-					top: '5rem',
-					right: '7rem',
-					bottom: '5rem',
-					left: 0,
-					background: 'rgba(0,0,255,0.9)',
-					color: 'white',
-				}}
-			>
+		<div className={styles.root}>
+			<div className={styles.container}>
 				<Button>Join</Button>
 			</div>
 		</div>

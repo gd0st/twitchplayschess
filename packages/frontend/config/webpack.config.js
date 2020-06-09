@@ -7,19 +7,26 @@ const entryPoints = require('./entrypoints.js');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (_env, argv) => {
 	let entry = {};
+
+	const isDev = argv.mode === 'development';
 
 	// edit webpack plugins here!
 	let plugins = [
 		new CleanWebpackPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
+		new MiniCssExtractPlugin({
+			filename: isDev ? '[name].css' : '[name].[hash].css',
+			chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
+		}),
 		new ForkTsCheckerWebpackPlugin({
 			typescript: resolve.sync('typescript', {
 				basedir: paths.node_modules,
 			}),
-			async: argv.mode === 'development',
+			async: isDev,
 			useTypescriptIncrementalApi: true,
 			checkSyntacticErrors: true,
 			tsconfig: paths.tsconfig,
@@ -103,13 +110,50 @@ module.exports = (_env, argv) => {
 					},
 				},
 				// css loader
+				// {
+				// 	test: /\.css$/i,
+				// 	use: [
+				// 		require.resolve('style-loader'),
+				// 		require.resolve('css-loader'),
+				// 	],
+				// },
+
+				// sass module loader
 				{
-					test: /\.css$/i,
-					use: [
-						require.resolve('style-loader'),
-						require.resolve('css-loader'),
+					test: /\.module\.s(a|c)ss$/,
+					loader: [
+						isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+						{
+							loader: 'css-loader',
+							options: {
+								modules: true,
+								sourceMap: isDev,
+							},
+						},
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: isDev,
+							},
+						},
 					],
 				},
+				// sass loader
+				{
+					test: /\.s(a|c)ss$/,
+					exclude: /\.module.(s(a|c)ss)$/,
+					loader: [
+						isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+						'css-loader',
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: isDev,
+							},
+						},
+					],
+				},
+
 				// "file" loader makes sure those assets get served by WebpackDevServer.
 				// When you `import` an asset, you get its (virtual) filename.
 				// In production, they would get copied to the `build` folder.
@@ -144,7 +188,7 @@ module.exports = (_env, argv) => {
 		module: {
 			rules,
 		},
-		resolve: { extensions: ['*', '.js', '.ts', '.tsx'] },
+		resolve: { extensions: ['*', '.js', '.ts', '.tsx', '.scss'] },
 		output: {
 			filename: '[name].bundle.js',
 			path: paths.build,
@@ -152,7 +196,7 @@ module.exports = (_env, argv) => {
 		plugins,
 	};
 
-	if (argv.mode === 'development') {
+	if (isDev) {
 		config.devServer = {
 			contentBase: paths.public,
 			host: argv.devrig ? 'localhost.rig.twitch.tv' : 'localhost',

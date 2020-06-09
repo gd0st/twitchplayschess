@@ -15,7 +15,12 @@
 		"experimentalDecorators": true,
 		"noEmit": true,
 		"jsx": "react",
-		"baseUrl": "."
+		"baseUrl": ".",
+		"plugins": [
+			{
+				"name": "typescript-plugin-css-modules"
+			}
+		]
 	},
 	"include": ["./src/**/*"],
 	"exclude": ["node_modules", "build"]

@@ -26,3 +26,5 @@ Go to the `Extension Views` tab to see live previews of the extension views. The
         	```Network error message: getaddrinfo ENOTFOUND localhost.rig.twitch.tv```
 
         	you need to add `12.0.0.1	localhost.rig.twitch.tv` to your /etc/hosts file.
+
+-   to get css module intellisense in vscode, do the `TypeScript: Select TypeScript Version` command and pick the `workspace version` option.
