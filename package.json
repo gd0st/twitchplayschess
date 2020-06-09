@@ -11,6 +11,7 @@
 		"dev:5head": "yarn workspace @alphachamp/5head dev",
 		"dev:backend": "yarn workspace @alphachamp/backend dev",
 		"dev:frontend": "yarn workspace @alphachamp/frontend dev",
+		"dev:frontend:rig": "yarn workspace @alphachamp/frontend dev:rig",
 		"start": "yarn workspace @alphachamp/backend start",
 		"build": "npx lerna run build --parallel --stream"
 	},
