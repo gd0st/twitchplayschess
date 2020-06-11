@@ -51,7 +51,10 @@ module.exports = (_env, argv) => {
 				new HtmlWebpackPlugin({
 					inject: true,
 					chunks: [name],
-					template: paths.template,
+					template: path.resolve(
+						paths.public,
+						entryPoints[name].template
+					),
 					filename: entryPoints[name].outputHtml,
 				})
 			);
@@ -110,14 +113,13 @@ module.exports = (_env, argv) => {
 					},
 				},
 				// css loader
-				// {
-				// 	test: /\.css$/i,
-				// 	use: [
-				// 		require.resolve('style-loader'),
-				// 		require.resolve('css-loader'),
-				// 	],
-				// },
-
+				{
+					test: /\.css$/i,
+					use: [
+						require.resolve('style-loader'),
+						require.resolve('css-loader'),
+					],
+				},
 				// sass module loader
 				{
 					test: /\.module\.s(a|c)ss$/,
@@ -153,7 +155,6 @@ module.exports = (_env, argv) => {
 						},
 					],
 				},
-
 				// "file" loader makes sure those assets get served by WebpackDevServer.
 				// When you `import` an asset, you get its (virtual) filename.
 				// In production, they would get copied to the `build` folder.
