@@ -1,17 +1,14 @@
 import React, { ReactNode } from 'react';
 
-if (window.Twitch) {
-	console.log(window.Twitch);
-
-	// window.Twitch.ext?.actions.followChannel('thegreatj');
-}
+import { ThemeProvider } from 'theme-ui';
+import theme from './theme';
 
 type AppProps = {
 	children: ReactNode;
 };
 
 const App = ({ children }: AppProps) => {
-	return <>{children}</>;
+	return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 export default App;

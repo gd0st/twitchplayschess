@@ -4,6 +4,8 @@
 /// <reference types="react-dom" />
 /// <reference types="./twitch.d.ts" />
 
+declare module '@alphachamp/frontend';
+
 declare namespace NodeJS {
 	interface ProcessEnv {
 		readonly NODE_ENV: 'development' | 'production' | 'test';
@@ -79,4 +81,7 @@ declare module '*.module.less' {
 	export default classes;
 }
 
-declare module '@alphachamp/frontend';
+declare module '@theme-ui/preset-base' {
+	const base: Partial<Theme>;
+	export default base;
+}
