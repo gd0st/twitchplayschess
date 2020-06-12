@@ -10,10 +10,10 @@ class Player:
         try:
             self.cursor.execute(f"SELECT * FROM stats WHERE userid = {id};")
             self.player_stats = self.cursor.fetchone()
-            print(f'User {id} successfully queried')
 
         except (Exception, psycopg2.Error) as error :
             print (f"Error while fetching stats from {id}", error)
+            self.player_stats = None
 
     def get_wins(self):
         return self.player_stats[4]
