@@ -23,7 +23,7 @@ def register_move(message):
         print("\n\n")
         
         send_state_update(
-            {'board': board.get_fen(), 'move': str(future.result())})
+            {'board': board.get_fen(), 'move': str(future.result()), 'legal moves': board.get_legal_moves()})
         
         player = Player(db.client, message['id'])
 

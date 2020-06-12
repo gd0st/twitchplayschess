@@ -11,7 +11,6 @@ class BoardGame:
     Returns move sequence for frontend to rerender the board positions
 
     """
-
     def __init__(self):
         self.board = chess.Board()
         self.position = []
@@ -57,10 +56,12 @@ class BoardGame:
         """
         Takes all possible moves and gets evaluations for them
         """
-        legal_moves = self.board.legal_moves
         moves = {}
-        for el in legal_moves:
+        for el in self.board.legal_moves:
             info = self.stocky.analyse(self.board, chess.engine.Limit(depth=12), root_moves=[el])
             moves[str(el)] = round(int(str(info["score"]))/100.,2)
 
         return moves
+
+    def get_legal_moves(self):
+        return self.board.legal_moves
