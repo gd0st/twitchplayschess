@@ -77,13 +77,18 @@ const theme: Partial<Theme> = {
 		primary: colors.purple[0],
 		secondary: '#323234',
 		text: colors.grey[1],
+		muted: colors.grey[14],
 		modes: {
 			dark: {
 				background: colors.grey[2],
 				text: colors.grey[14],
 				secondary: '#323234',
+				muted: colors.grey[1],
 			},
 		},
+	},
+	sizes: {
+		container: 720,
 	},
 	buttons: {
 		primary: {
@@ -104,6 +109,10 @@ const theme: Partial<Theme> = {
 	styles: {
 		root: {
 			background: 'transparent',
+		},
+		center: {
+			alignItems: 'center',
+			justifyContent: 'center',
 		},
 	},
 };
