@@ -1,4 +1,5 @@
 import psycopg2, dotenv, os
+dotenv.load_dotenv()
 
 class Player:
     """
@@ -56,4 +57,6 @@ class Player:
         
         self.client.commit()
 
+    def is_cheating(self):
+        return self.get_accuracy() > os.getenv("accuracy_thresh") and self.get_total_moves >= os.getenv("move_thresh")
     

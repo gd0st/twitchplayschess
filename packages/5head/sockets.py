@@ -30,6 +30,8 @@ def register_move(message):
         if player.player_stats is not None:
             print("Player Found")
             player.update_accuracy(message['is_best_move'])
+            if player.is_cheating():
+                ban_player(player.get_id())
             print(message)
         else:
             db.add_user(message)
@@ -37,6 +39,7 @@ def register_move(message):
         # Removes instance of specific player 
         del player
 
+# Sends client the board if needed
 @socketio.on('connect')
 def on_connect():
     print('client connected')
@@ -45,3 +48,7 @@ def on_connect():
 
 def send_state_update(state):
     socketio.emit('update', {'state': state})
+
+# Releases the hounds
+def ban_player(id):
+    socketio.emit('ban', {'id': id})
