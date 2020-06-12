@@ -12,3 +12,5 @@ Once you get 5head working, get all the node dependencies with `yarn setup`
 `yarn dev` runs `yarn dev` in all the packages in parallel.
 
 `yarn dev:[package-name]` runs `yarn dev` script in the given [package-name].
+
+`yarn cert` generates a self-signed SSL certificate for local development.

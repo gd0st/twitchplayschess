@@ -12,6 +12,7 @@
 		"dev:backend": "yarn workspace @alphachamp/backend dev",
 		"dev:frontend": "yarn workspace @alphachamp/frontend dev",
 		"dev:frontend:rig": "yarn workspace @alphachamp/frontend dev:rig",
+		"cert": "node ./scripts/ssl.js",
 		"start": "yarn workspace @alphachamp/backend start",
 		"build": "npx lerna run build --parallel --stream"
 	},
@@ -31,7 +32,8 @@
 		"cross-spawn": "^7.0.3",
 		"husky": "^4.2.5",
 		"lint-staged": "^10.2.2",
-		"prettier": "^2.0.5"
+		"prettier": "^2.0.5",
+		"selfsigned": "^1.10.7"
 	},
 	"prettier": {
 		"useTabs": true,
