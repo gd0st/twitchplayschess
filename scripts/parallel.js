@@ -15,6 +15,15 @@ var workspacesFound = false;
 
 var processes = [];
 
+function killAll() {
+	processes.forEach((proc) => proc.kill());
+}
+
+function exit() {
+	killAll();
+	process.exit();
+}
+
 // get workspaces info from yarn
 const yarncmd = spawn('yarn', ['workspaces', 'info']);
 
@@ -32,11 +41,15 @@ yarncmd.stdout.on('data', (data) => {
 		}
 
 		try {
+			process.on('exit', () => killAll());
+			process.on('SIGINT', () => exit());
+			process.on('SIGTERM', () => exit());
+
 			start(workspaces);
 		} catch (error) {
 			console.error(error);
 
-			processes.forEach((proc) => proc.kill());
+			killAll();
 		}
 	}
 });
