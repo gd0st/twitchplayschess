@@ -32,6 +32,8 @@ const { private, cert } = selfsigned.generate(null, {
 	countryName: 'US',
 });
 
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
+
 fs.writeFileSync(path.resolve(outputDir, `${outputFileName}.key`), private);
 fs.writeFileSync(path.resolve(outputDir, `${outputFileName}.crt`), cert);
 
